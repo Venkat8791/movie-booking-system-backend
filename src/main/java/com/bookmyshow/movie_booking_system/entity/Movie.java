@@ -27,4 +27,16 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<ShowTime> showTimes = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "duration=" + duration +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", rating=" + rating +
+                ", posterUrl='" + posterUrl + '\'' +
+                ", language='" + language + '\'' +
+                '}';
+    }
 }

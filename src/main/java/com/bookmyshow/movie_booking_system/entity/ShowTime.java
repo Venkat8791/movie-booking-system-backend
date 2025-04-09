@@ -1,10 +1,13 @@
 package com.bookmyshow.movie_booking_system.entity;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -15,9 +18,11 @@ public class ShowTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date startTime;
+    private LocalDate showDate;
 
-    private Date endTime;
+    private LocalTime startTime;
+
+    private LocalTime endTime;
 
     @ManyToOne
     @JoinColumn(name="movie_id", nullable = false)
@@ -30,4 +35,13 @@ public class ShowTime {
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "ShowTime{" +
+                "id=" + id +
+                ", showDate=" + showDate +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

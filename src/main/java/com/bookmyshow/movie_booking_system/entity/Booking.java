@@ -32,4 +32,13 @@ public class Booking {
     @JoinTable(name = "booking_seat", joinColumns = @JoinColumn(name = "booking_id"),inverseJoinColumns = @JoinColumn(name = "seat_id"))
     private List<Seat> seatsBooked = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", paymentStatus='" + paymentStatus + '\'' +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
+
 }

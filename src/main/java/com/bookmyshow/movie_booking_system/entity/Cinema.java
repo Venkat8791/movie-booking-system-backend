@@ -21,4 +21,12 @@ public class Cinema {
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     private List<Screen> screens = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Cinema{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

@@ -22,10 +22,19 @@ public class Screen {
     @JoinColumn(name = "cinema_id",nullable = false)
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<ShowTime> showTimes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<Seat> seats = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Screen{" +
+                "id=" + id +
+                ", screenName='" + screenName + '\'' +
+                ", totalSeats=" + totalSeats +
+                '}';
+    }
 }

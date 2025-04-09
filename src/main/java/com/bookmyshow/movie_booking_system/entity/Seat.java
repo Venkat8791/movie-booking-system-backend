@@ -22,5 +22,15 @@ public class Seat {
 
     @ManyToMany(mappedBy = "seatsBooked")
     private List<Booking> bookings;
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id=" + id +
+                ", seatNumber='" + seatNumber + '\'' +
+                ", seatType='" + seatType + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
 
