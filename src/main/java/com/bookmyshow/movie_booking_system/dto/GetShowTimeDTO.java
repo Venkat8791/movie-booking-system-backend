@@ -7,10 +7,10 @@ import java.util.List;
 @Getter
 public class GetShowTimeDTO {
     private final String cinemaName;
-    private final List<GetShowDTO> screens;
+    private final List<GetShowDTO> shows;
 
-    public GetShowTimeDTO(String cinemaName ,List<GetShowDTO> screens) {
+    public GetShowTimeDTO(String cinemaName ,List<GetShowDTO> shows) {
         this.cinemaName = cinemaName;
-        this.screens = screens;
+        this.shows = shows;
     }
 }

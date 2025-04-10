@@ -1,5 +1,6 @@
 package com.bookmyshow.movie_booking_system.repository;
 
+import com.bookmyshow.movie_booking_system.entity.ShowSeat;
 import com.bookmyshow.movie_booking_system.entity.ShowTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,8 @@ public interface ShowTimeRepository extends JpaRepository<ShowTime,Long> {
     @Query("SELECT s FROM ShowTime s WHERE s.movie.id = :movieId AND s.showDate= :date")
     List<ShowTime> fetchShowTimesForMovie(@Param("movieId") long movieId, @Param("date") LocalDate date);
 
+    @Query("SELECT ss FROM ShowSeat ss JOIN FETCH ss.seat WHERE ss.showTime.id = :showTimeId")
+    List<ShowSeat> findSeatsByShowTime(@Param("showTimeId") Long showTimeId);
 
 }
 
