@@ -2,7 +2,6 @@ package com.bookmyshow.movie_booking_system.service;
 
 import com.bookmyshow.movie_booking_system.dto.GetShowTimeSeatLayoutDTO;
 import com.bookmyshow.movie_booking_system.dto.SeatDTO;
-import com.bookmyshow.movie_booking_system.entity.Seat;
 import com.bookmyshow.movie_booking_system.entity.ShowSeat;
 import com.bookmyshow.movie_booking_system.entity.ShowTime;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;

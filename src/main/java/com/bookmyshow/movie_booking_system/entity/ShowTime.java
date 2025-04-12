@@ -18,6 +18,8 @@ public class ShowTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int availableSeats;
+
     private LocalDate showDate;
 
     private LocalTime startTime;
@@ -34,6 +36,11 @@ public class ShowTime {
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
+
+    public void addBooking(Booking booking){
+        this.getBookings().add(booking);
+        booking.setShowtime(this);
+    }
 
     @Override
     public String toString() {

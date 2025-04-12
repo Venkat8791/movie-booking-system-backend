@@ -23,6 +23,11 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+        booking.setUser(this);  // important to maintain both sides
+    }
+
     @Override
     public String toString() {
         return "User{" +

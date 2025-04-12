@@ -42,11 +42,13 @@ public class MovieService {
         Map<String, List<GetShowDTO>> cinemaShowMap = new HashMap<>();
         for(ShowTime showTime: showTimes){
             Long showTimeId = showTime.getId();
+            Long screenId = showTime.getScreen().getId();
             String cinemaName = showTime.getScreen().getCinema().getName();
             String screenName = showTime.getScreen().getScreenName();
             String showTimeName = showTime.getStartTime().toString();
             int noOfSeats = showTime.getScreen().getTotalSeats();
-            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenName,showTimeName,noOfSeats);
+            int availableSeats = showTime.getAvailableSeats();
+            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,noOfSeats,availableSeats);
             cinemaShowMap.computeIfAbsent(cinemaName,k->new ArrayList<>()).add(getShowDTO);
         }
         return cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), entry

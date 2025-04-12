@@ -13,7 +13,7 @@ public class GetShowTimeSeatLayoutDTO {
     private final String movieName;
     private final List<SeatDTO> seats;
 
-    public GetShowTimeSeatLayoutDTO(Long showTimeId, String cinemaName,  String screenName,  String showTimeName, String movieName, List<SeatDTO> seats) {
+    public GetShowTimeSeatLayoutDTO(Long showTimeId, String cinemaName, String screenName, String showTimeName, String movieName, List<SeatDTO> seats) {
         this.cinemaName = cinemaName;
         this.movieName = movieName;
         this.screenName = screenName;

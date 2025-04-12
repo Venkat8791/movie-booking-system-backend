@@ -25,9 +25,6 @@ public class Seat {
     @JoinColumn(name = "screen_id", nullable = false)
     private Screen screen;
 
-    @ManyToMany(mappedBy = "seatsBooked")
-    private List<Booking> bookings;
-
 
     public String getSeatNumber(){
         return this.rowNum + this.columnNum;

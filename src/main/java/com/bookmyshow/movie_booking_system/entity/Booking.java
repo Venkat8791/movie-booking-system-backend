@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,10 +16,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String paymentStatus;
 
     private double totalPrice;
+
+    private Date bookingDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
@@ -29,8 +31,12 @@ public class Booking {
     private ShowTime showtime;
 
     @ManyToMany
-    @JoinTable(name = "booking_seat", joinColumns = @JoinColumn(name = "booking_id"),inverseJoinColumns = @JoinColumn(name = "seat_id"))
-    private List<Seat> seatsBooked = new ArrayList<>();
+    @JoinTable(name = "booking_show_seat", joinColumns = @JoinColumn(name = "booking_id"),inverseJoinColumns = @JoinColumn(name = "show_seat_id"))
+    private List<ShowSeat> seatsBooked = new ArrayList<>();
+
+    public void addSeat(ShowSeat showSeat){
+        this.seatsBooked.add(showSeat);
+    }
 
     @Override
     public String toString() {
