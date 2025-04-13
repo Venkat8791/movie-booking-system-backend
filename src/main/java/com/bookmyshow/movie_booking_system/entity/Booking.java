@@ -28,7 +28,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "showtime_id",nullable = false)
-    private ShowTime showtime;
+    private ShowTime showTime;
 
     @ManyToMany
     @JoinTable(name = "booking_show_seat", joinColumns = @JoinColumn(name = "booking_id"),inverseJoinColumns = @JoinColumn(name = "show_seat_id"))

@@ -34,12 +34,12 @@ public class ShowTime {
     @JoinColumn(name = "screen_id",nullable = false)
     private Screen screen;
 
-    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "showTime", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
 
     public void addBooking(Booking booking){
         this.getBookings().add(booking);
-        booking.setShowtime(this);
+        booking.setShowTime(this);
     }
 
     @Override

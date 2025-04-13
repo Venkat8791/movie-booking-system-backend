@@ -17,4 +17,14 @@ public class BookingDTO {
         this.totalPrice = totalPrice;
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "BookingDTO{" +
+                "seatIds=" + seatIds +
+                ", userId=" + userId +
+                ", showTimeId=" + showTimeId +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

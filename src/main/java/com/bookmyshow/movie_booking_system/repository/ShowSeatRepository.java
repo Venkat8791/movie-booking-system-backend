@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShowSeatRepository extends JpaRepository<ShowSeat,Long> {
 
-    @Query("SELECT s from ShowSeat s WHERe s.seat.id= :seatId AND s.showTime.id= :showTimeId")
+    @Query("SELECT s from ShowSeat s WHERE s.seat.id= :seatId AND s.showTime.id= :showTimeId")
     public ShowSeat findBySeatAndShowTime(long seatId,long showTimeId);
+
 }
