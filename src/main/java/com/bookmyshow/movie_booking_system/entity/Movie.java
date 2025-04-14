@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter // Only getters, no setters
@@ -22,7 +23,11 @@ public class Movie {
     private String genre;
     private double rating;
     private String posterUrl;
-    private String language;
+
+    @ElementCollection(targetClass = LanguageType.class)
+    @CollectionTable(name="movie_languages",joinColumns = @JoinColumn(name = "movie_id"))
+    @Enumerated(EnumType.STRING)
+    private List<LanguageType> languages;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<ShowTime> showTimes = new ArrayList<>();
@@ -36,7 +41,6 @@ public class Movie {
                 ", genre='" + genre + '\'' +
                 ", rating=" + rating +
                 ", posterUrl='" + posterUrl + '\'' +
-                ", language='" + language + '\'' +
                 '}';
     }
 }

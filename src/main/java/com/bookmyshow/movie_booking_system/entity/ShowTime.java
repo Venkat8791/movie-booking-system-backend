@@ -26,6 +26,9 @@ public class ShowTime {
 
     private LocalTime endTime;
 
+    @Enumerated(EnumType.STRING)
+    private LanguageType language = LanguageType.ENGLISH;
+
     @ManyToOne
     @JoinColumn(name="movie_id", nullable = false)
     private Movie movie;

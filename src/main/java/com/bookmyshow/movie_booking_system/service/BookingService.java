@@ -82,14 +82,14 @@ public class BookingService {
         Cinema cinema = screen.getCinema();
         List<ShowSeat> seatsBooked = booking.getSeatsBooked();
         Movie movie = showTime.getMovie();
-        MovieDTO movieDTO = new MovieDTO(movie.getTitle(),movie.getDuration(),movie.getGenre(),movie.getPosterUrl(),movie.getLanguage());
+        MovieDTO movieDTO = new MovieDTO(movie.getTitle(),movie.getDuration(),movie.getGenre(),movie.getPosterUrl());
         ShowDetailsDTO showDetailsDTO = new ShowDetailsDTO(showTime.getStartTime().toString(),screen.getScreenName(),cinema.getName(),cinema.getLocation());
         List<String> seatNumbers = new ArrayList<>();
         for(ShowSeat showSeat : seatsBooked){
             Seat seat = showSeat.getSeat();
             seatNumbers.add(seat.getSeatNumber());
         }
-        return new BookingDetailsDTO(bookingId,movieDTO,showDetailsDTO,seatNumbers,booking.getTotalPrice());
+        return new BookingDetailsDTO(bookingId,showTime.getLanguage().getLanguageName(),movieDTO,showDetailsDTO,seatNumbers,booking.getTotalPrice());
 
 
 

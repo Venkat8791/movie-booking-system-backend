@@ -3,7 +3,6 @@ package com.bookmyshow.movie_booking_system.service;
 import com.bookmyshow.movie_booking_system.dto.*;
 import com.bookmyshow.movie_booking_system.dto.GetShowTimeDTO;
 import com.bookmyshow.movie_booking_system.entity.Movie;
-import com.bookmyshow.movie_booking_system.entity.Screen;
 import com.bookmyshow.movie_booking_system.entity.ShowTime;
 import com.bookmyshow.movie_booking_system.repository.MovieRepository;
 import com.bookmyshow.movie_booking_system.repository.ShowTimeRepository;

@@ -1,7 +1,12 @@
 package com.bookmyshow.movie_booking_system.dto;
 
+import com.bookmyshow.movie_booking_system.entity.LanguageType;
 import com.bookmyshow.movie_booking_system.entity.Movie;
 import lombok.Getter;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 public class GetMovieDTO {
@@ -11,7 +16,7 @@ public class GetMovieDTO {
     private final String genre;
     private final double rating;
     private final String posterUrl;
-    private final String language;
+    private final List<String> languages;
 
     public GetMovieDTO(Movie movie){
         this.id = movie.getId();
@@ -20,6 +25,9 @@ public class GetMovieDTO {
         this.genre = movie.getGenre();
         this.rating = movie.getRating();
         this.posterUrl = movie.getPosterUrl();
-        this.language = movie.getLanguage();
+        this.languages = movie.getLanguages()
+                .stream()
+                .map(LanguageType::getLanguageName)
+                .collect(Collectors.toList());;
     }
 }
