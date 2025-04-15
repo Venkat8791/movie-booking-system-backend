@@ -11,14 +11,16 @@ public class GetShowTimeSeatLayoutDTO {
     private final String screenName;
     private final String cinemaName;
     private final String movieName;
+    private final String showDate;
     private final List<SeatDTO> seats;
 
-    public GetShowTimeSeatLayoutDTO(Long showTimeId, String cinemaName, String screenName, String showTimeName, String movieName, List<SeatDTO> seats) {
+    public GetShowTimeSeatLayoutDTO(Long showTimeId, String cinemaName, String screenName, String showTimeName, String movieName,String showDate, List<SeatDTO> seats) {
         this.cinemaName = cinemaName;
         this.movieName = movieName;
         this.screenName = screenName;
         this.seats = seats;
         this.showTimeId = showTimeId;
+        this.showDate = showDate;
         this.showTimeName = showTimeName;
     }
 }

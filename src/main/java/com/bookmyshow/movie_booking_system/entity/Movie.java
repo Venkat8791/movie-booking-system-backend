@@ -24,6 +24,9 @@ public class Movie {
     private double rating;
     private String posterUrl;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @ElementCollection(targetClass = LanguageType.class)
     @CollectionTable(name="movie_languages",joinColumns = @JoinColumn(name = "movie_id"))
     @Enumerated(EnumType.STRING)

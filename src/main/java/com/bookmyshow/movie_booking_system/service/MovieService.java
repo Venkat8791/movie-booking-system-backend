@@ -43,6 +43,7 @@ public class MovieService {
             Long showTimeId = showTime.getId();
             Long screenId = showTime.getScreen().getId();
             String cinemaName = showTime.getScreen().getCinema().getName();
+            long cinemaID = showTime.getScreen().getCinema().getId();
             String screenName = showTime.getScreen().getScreenName();
             String showTimeName = showTime.getStartTime().toString();
             int noOfSeats = showTime.getScreen().getTotalSeats();

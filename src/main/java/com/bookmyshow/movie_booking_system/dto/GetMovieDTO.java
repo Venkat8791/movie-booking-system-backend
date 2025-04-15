@@ -16,6 +16,7 @@ public class GetMovieDTO {
     private final String genre;
     private final double rating;
     private final String posterUrl;
+    private final String description;
     private final List<String> languages;
 
     public GetMovieDTO(Movie movie){
@@ -25,6 +26,7 @@ public class GetMovieDTO {
         this.genre = movie.getGenre();
         this.rating = movie.getRating();
         this.posterUrl = movie.getPosterUrl();
+        this.description = movie.getDescription();
         this.languages = movie.getLanguages()
                 .stream()
                 .map(LanguageType::getLanguageName)

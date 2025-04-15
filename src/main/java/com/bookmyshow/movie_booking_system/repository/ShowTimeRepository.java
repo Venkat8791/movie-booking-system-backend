@@ -19,5 +19,7 @@ public interface ShowTimeRepository extends JpaRepository<ShowTime,Long> {
     @Query("SELECT ss FROM ShowSeat ss JOIN FETCH ss.seat WHERE ss.showTime.id = :showTimeId")
     List<ShowSeat> findSeatsByShowTime(@Param("showTimeId") Long showTimeId);
 
+    @Query("SELECT st from ShowTime st JOIN FETCH st.movie m JOIN FETCH st.screen s where st.movie.id= :movieId AND st.showDate= :showDate AND s.cinema.id= :cinemaId")
+    List<ShowTime> findShowsByMovieIdAndShowDate(long cinemaId,long movieId, LocalDate showDate);
 }
 

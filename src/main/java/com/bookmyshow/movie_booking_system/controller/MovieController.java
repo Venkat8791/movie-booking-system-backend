@@ -1,6 +1,7 @@
 package com.bookmyshow.movie_booking_system.controller;
 
 import com.bookmyshow.movie_booking_system.dto.GetMovieDTO;
+import com.bookmyshow.movie_booking_system.dto.GetMovieShowTimesDTO;
 import com.bookmyshow.movie_booking_system.dto.GetMoviesResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.GetShowTimeDTO;
 import com.bookmyshow.movie_booking_system.service.MovieService;
@@ -35,12 +36,13 @@ public class MovieController {
     }
 
     @GetMapping("/movies/{movieId}/showtimes")
-    public ResponseEntity<List<GetShowTimeDTO>> getMovie(@PathVariable long movieId, @RequestParam(required = false) String showdate){
+    public ResponseEntity<GetMovieShowTimesDTO> getMovie(@PathVariable long movieId, @RequestParam(required = false) String showdate){
         System.out.println(showdate);
         if(showdate == null || showdate.isEmpty()){
             showdate = LocalDate.now().toString();
         }
         List<GetShowTimeDTO> showTimesForMovie = movieService.getShowTimesByMovieAndDate(movieId,showdate);
-        return ResponseEntity.status(200).body(showTimesForMovie);
+        GetMovieShowTimesDTO getMovieShowTimesDTO = new GetMovieShowTimesDTO(showdate,showTimesForMovie);
+        return ResponseEntity.status(200).body(getMovieShowTimesDTO);
     }
 }
