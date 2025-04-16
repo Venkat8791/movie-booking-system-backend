@@ -37,8 +37,9 @@ public class MovieService {
     public List<GetShowTimeDTO> getShowTimesByMovieAndDate(long movieId, String dateFromRequest) {
         LocalDate date = LocalDate.parse(dateFromRequest);
         List<ShowTime> showTimes = showTimeRepository.fetchShowTimesForMovie(movieId,date);
+        Map<Long,String> cinemaMap = new HashMap<>();
 
-        Map<String, List<GetShowDTO>> cinemaShowMap = new HashMap<>();
+        Map<Long, List<GetShowDTO>> cinemaShowMap = new HashMap<>();
         for(ShowTime showTime: showTimes){
             Long showTimeId = showTime.getId();
             Long screenId = showTime.getScreen().getId();
@@ -48,10 +49,13 @@ public class MovieService {
             String showTimeName = showTime.getStartTime().toString();
             int noOfSeats = showTime.getScreen().getTotalSeats();
             int availableSeats = showTime.getAvailableSeats();
+            if(!cinemaMap.containsKey(cinemaID)){
+                cinemaMap.put(cinemaID,cinemaName);
+            }
             GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,noOfSeats,availableSeats);
-            cinemaShowMap.computeIfAbsent(cinemaName,k->new ArrayList<>()).add(getShowDTO);
+            cinemaShowMap.computeIfAbsent(cinemaID,k->new ArrayList<>()).add(getShowDTO);
         }
-        return cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), entry
+        return cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), cinemaMap.get(entry.getKey()),entry
                 .getValue())).collect(Collectors.toList());
     }
 }
