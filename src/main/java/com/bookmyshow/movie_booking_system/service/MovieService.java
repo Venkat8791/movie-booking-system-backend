@@ -49,10 +49,11 @@ public class MovieService {
             String showTimeName = showTime.getStartTime().toString();
             int noOfSeats = showTime.getScreen().getTotalSeats();
             int availableSeats = showTime.getAvailableSeats();
+            String language = showTime.getLanguage()!=null ? showTime.getLanguage().getLanguageName() : "";
             if(!cinemaMap.containsKey(cinemaID)){
                 cinemaMap.put(cinemaID,cinemaName);
             }
-            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,noOfSeats,availableSeats);
+            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,language,noOfSeats,availableSeats);
             cinemaShowMap.computeIfAbsent(cinemaID,k->new ArrayList<>()).add(getShowDTO);
         }
         return cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), cinemaMap.get(entry.getKey()),entry

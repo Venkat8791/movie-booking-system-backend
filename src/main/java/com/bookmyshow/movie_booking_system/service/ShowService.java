@@ -64,7 +64,8 @@ public class ShowService {
             String showTimeName = showTime.getStartTime().toString();
             int noOfSeats = showTime.getScreen().getTotalSeats();
             int availableSeats = showTime.getAvailableSeats();
-            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,noOfSeats,availableSeats);
+            String language = showTime.getLanguage()!=null ? showTime.getLanguage().getLanguageName() : "";
+            GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,language,noOfSeats,availableSeats);
             getShowDTOS.add(getShowDTO);
         }
         return new GetShowTimesDTO(cinemaId,movieId,showDate,getShowDTOS);

@@ -1,6 +1,11 @@
 spring:
   application:
     name: movie-booking-system
+  data:
+    mongodb:
+      uri: mongodb+srv://gadiyakarivenkat:Venkat791@cluster0.maubzyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      driver: cdata.jdbc.mongodb.MongoDBDriver
+      database: MovieBooking
   datasource:
     url: jdbc:mysql://localhost:3306/movie_booking_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
