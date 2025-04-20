@@ -1,7 +1,7 @@
 package com.bookmyshow.movie_booking_system.service;
 
 import com.bookmyshow.movie_booking_system.dto.*;
-import com.bookmyshow.movie_booking_system.entity.*;
+import com.bookmyshow.movie_booking_system.entity.mysql.*;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;
 import com.bookmyshow.movie_booking_system.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class BookingService {
 
     public PostBookingResponseDTO addBooking(BookingDTO bookingDTO){
         System.out.println(bookingDTO);
-        for(long seatId: bookingDTO.getSeatIds()){
+        for(String seatId: bookingDTO.getSeatIds()){
             System.out.println(seatId);
         }
         Booking booking = new Booking();
@@ -62,7 +62,7 @@ public class BookingService {
         booking.setTotalPrice(totalPrice);
         booking.setBookingDate(bookingDate);
 
-        for(long seatId: bookingDTO.getSeatIds()){
+        for(String seatId: bookingDTO.getSeatIds()){
             ShowSeat showSeat = showSeatRepository.findBySeatAndShowTime(seatId,showTime.getId());
             showSeat.setStatus(SeatStatus.BOOKED);
             booking.addSeat(showSeat);

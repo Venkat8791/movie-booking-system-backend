@@ -1,6 +1,6 @@
 package com.bookmyshow.movie_booking_system.repository;
 
-import com.bookmyshow.movie_booking_system.entity.Seat;
+import com.bookmyshow.movie_booking_system.entity.mysql.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,17 +1,15 @@
-package com.bookmyshow.movie_booking_system.entity;
+package com.bookmyshow.movie_booking_system.entity.mysql;
 
 import com.bookmyshow.movie_booking_system.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Data
 public class Seat {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String rowNum;
     private int columnNum;
@@ -19,7 +17,6 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private SeatType seatType = SeatType.REGULAR;;
 
-    private int price;
 
     @ManyToOne
     @JoinColumn(name = "screen_id", nullable = false)
@@ -37,7 +34,6 @@ public class Seat {
                 ", rowNum='" + rowNum + '\'' +
                 ", columnNum=" + columnNum +
                 ", seatType=" + seatType +
-                ", price=" + price +
                 ", screen=" + screen +
                 '}';
     }

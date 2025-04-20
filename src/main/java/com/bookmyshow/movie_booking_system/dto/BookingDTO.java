@@ -8,10 +8,10 @@ import java.util.List;
 public class BookingDTO {
     private final long userId;
     private final long showTimeId;
-    private final List<Long> seatIds;
+    private final List<String> seatIds;
     private final double totalPrice;
 
-    public BookingDTO(List<Long> seatIds, long showTimeId, double totalPrice, long userId) {
+    public BookingDTO(List<String> seatIds, long showTimeId, double totalPrice, long userId) {
         this.seatIds = seatIds;
         this.showTimeId = showTimeId;
         this.totalPrice = totalPrice;

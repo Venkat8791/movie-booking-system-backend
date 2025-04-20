@@ -1,10 +1,9 @@
-package com.bookmyshow.movie_booking_system.entity;
+package com.bookmyshow.movie_booking_system.entity.mysql;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

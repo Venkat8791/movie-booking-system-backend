@@ -3,7 +3,7 @@ spring:
     name: movie-booking-system
   data:
     mongodb:
-      uri: mongodb+srv://gadiyakarivenkat:Venkat791@cluster0.maubzyy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      uri: mongodb+srv://gadiyakarivenkat:Venkat791@cluster0.maubzyy.mongodb.net/MovieBooking?retryWrites=true&w=majority&appName=Cluster0
       driver: cdata.jdbc.mongodb.MongoDBDriver
       database: MovieBooking
   datasource:

@@ -27,6 +27,12 @@ public class ShowController {
         return ResponseEntity.status(200).body(showTimeSeatLayoutDTO);
     }
 
+    @GetMapping("/showtimes/{showTimeId}/bookedSeats")
+    public ResponseEntity<GetShowTimeSeatLayoutDTO> getBookedSeatsForShowTime(@PathVariable long showTimeId){
+        GetShowTimeSeatLayoutDTO showTimeSeatLayoutDTO = showService.getBookedSeatsForShowTime(showTimeId);
+        return ResponseEntity.status(200).body(showTimeSeatLayoutDTO);
+    }
+
     @GetMapping("/showtimes")
     public ResponseEntity<GetShowTimesDTO> getShowTimeForDay(@RequestParam("cinemaId") long cinemaId, @RequestParam("movieId") long movieId, @RequestParam("showDate") String showDate){
         log.info("Received request with showDate={}, cinemaId={}, movieId={}", showDate, cinemaId, movieId);

@@ -1,8 +1,8 @@
 package com.bookmyshow.movie_booking_system.service;
 
 
-import com.bookmyshow.movie_booking_system.entity.Screen;
-import com.bookmyshow.movie_booking_system.entity.Seat;
+import com.bookmyshow.movie_booking_system.entity.mysql.Screen;
+import com.bookmyshow.movie_booking_system.entity.mysql.Seat;
 import com.bookmyshow.movie_booking_system.enums.SeatType;
 import com.bookmyshow.movie_booking_system.repository.ScreenRepository;
 import com.bookmyshow.movie_booking_system.repository.SeatRepository;
@@ -35,21 +35,20 @@ public class SeatService {
             char rowChar = (char)('A'+row);
             for(int col = 1;col<=columns;col++){
                 SeatType seatType;
-                int price = basePrice;
+
                 if(row<=2){
                     seatType = SeatType.VIP;
-                    price += 150;
+
                 }
                 else if(row<=8){
                     seatType = SeatType.PREMIUM;
-                    price += 75;
+
                 }
                 else{
                     seatType = SeatType.REGULAR;
                 }
                 Seat seat = new Seat();
                 seat.setScreen(screen);
-                seat.setPrice(price);
                 seat.setSeatType(seatType);
                 seat.setRowNum(String.valueOf(rowChar));
                 seat.setColumnNum(col);;

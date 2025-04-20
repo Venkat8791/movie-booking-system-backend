@@ -1,8 +1,8 @@
 package com.bookmyshow.movie_booking_system.service;
 
-import com.bookmyshow.movie_booking_system.entity.Seat;
-import com.bookmyshow.movie_booking_system.entity.ShowSeat;
-import com.bookmyshow.movie_booking_system.entity.ShowTime;
+import com.bookmyshow.movie_booking_system.entity.mysql.Seat;
+import com.bookmyshow.movie_booking_system.entity.mysql.ShowSeat;
+import com.bookmyshow.movie_booking_system.entity.mysql.ShowTime;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;
 import com.bookmyshow.movie_booking_system.repository.SeatRepository;
 import com.bookmyshow.movie_booking_system.repository.ShowSeatRepository;

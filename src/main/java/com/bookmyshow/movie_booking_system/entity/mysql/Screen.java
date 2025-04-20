@@ -1,4 +1,4 @@
-package com.bookmyshow.movie_booking_system.entity;
+package com.bookmyshow.movie_booking_system.entity.mysql;
 
 import jakarta.persistence.*;
 import lombok.Data;

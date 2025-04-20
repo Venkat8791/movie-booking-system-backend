@@ -2,7 +2,7 @@ package com.bookmyshow.movie_booking_system.service;
 
 import com.bookmyshow.movie_booking_system.dto.PostUserResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.UserDTO;
-import com.bookmyshow.movie_booking_system.entity.User;
+import com.bookmyshow.movie_booking_system.entity.mysql.User;
 import com.bookmyshow.movie_booking_system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

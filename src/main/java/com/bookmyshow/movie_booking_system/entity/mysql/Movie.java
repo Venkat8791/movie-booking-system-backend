@@ -1,11 +1,10 @@
-package com.bookmyshow.movie_booking_system.entity;
+package com.bookmyshow.movie_booking_system.entity.mysql;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter // Only getters, no setters

@@ -1,11 +1,10 @@
 package com.bookmyshow.movie_booking_system.dto;
 
-import com.bookmyshow.movie_booking_system.entity.LanguageType;
-import com.bookmyshow.movie_booking_system.entity.Movie;
+import com.bookmyshow.movie_booking_system.entity.mysql.LanguageType;
+import com.bookmyshow.movie_booking_system.entity.mysql.Movie;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter

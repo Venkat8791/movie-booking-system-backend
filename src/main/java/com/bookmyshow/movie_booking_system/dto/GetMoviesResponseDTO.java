@@ -1,6 +1,6 @@
 package com.bookmyshow.movie_booking_system.dto;
 
-import com.bookmyshow.movie_booking_system.entity.Movie;
+import com.bookmyshow.movie_booking_system.entity.mysql.Movie;
 
 import java.util.Collections;
 import java.util.List;
