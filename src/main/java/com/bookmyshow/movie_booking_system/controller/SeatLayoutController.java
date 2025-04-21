@@ -1,13 +1,11 @@
 package com.bookmyshow.movie_booking_system.controller;
 
+import com.bookmyshow.movie_booking_system.dto.LayoutRequestDTO;
 import com.bookmyshow.movie_booking_system.entity.mongodb.LayoutDocument;
 import com.bookmyshow.movie_booking_system.service.mongo.LayoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/mxmovies/v1")
@@ -19,6 +17,12 @@ public class SeatLayoutController {
     @GetMapping("/layouts/{screenId}")
     public ResponseEntity<LayoutDocument> getLayoutByScreenId(@PathVariable long screenId){
         LayoutDocument layoutDocument = layoutService.fetchLayoutByScreenId(screenId);
+        return ResponseEntity.status(200).body(layoutDocument);
+    }
+
+    @PostMapping("/layouts/{screenId}")
+    public ResponseEntity<LayoutDocument> insertSeatLayoutIntoScreenId(@RequestBody LayoutRequestDTO layoutRequestDTO){
+        LayoutDocument layoutDocument = layoutService.insertSeatLayoutToScreenId(layoutRequestDTO);
         return ResponseEntity.status(200).body(layoutDocument);
     }
 }
