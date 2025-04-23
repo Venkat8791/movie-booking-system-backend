@@ -6,10 +6,10 @@ import lombok.Getter;
 public class AuthResonseDTO {
     private final Long userId;
     private final String username;
-    private final int expiry;
+    private final Long expiry;
     private final String token;
 
-    public AuthResonseDTO(Long userId,String username, String token,int expiry) {
+    public AuthResonseDTO(Long userId,String username, String token,Long expiry) {
         this.userId = userId;
         this.username = username;
         this.token = token;

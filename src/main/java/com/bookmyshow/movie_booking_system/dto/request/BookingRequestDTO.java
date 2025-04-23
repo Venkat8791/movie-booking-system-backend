@@ -6,6 +6,7 @@ import java.util.List;
 
 @Getter
 public class BookingDTO {
+
     private final long userId;
     private final long showTimeId;
     private final List<String> seatIds;
