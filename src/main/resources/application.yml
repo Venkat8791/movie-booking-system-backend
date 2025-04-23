@@ -1,4 +1,6 @@
 spring:
+  jwt:
+    secret: "M*m0vI#s"
   application:
     name: movie-booking-system
   data:
@@ -26,3 +28,13 @@ spring:
       hibernate:
         format_sql: true
 
+
+twilio:
+  verify:
+    serviceSid: #add service sid
+  account:
+    sid: #add account sid
+  auth:
+    token: #add auth token
+  phone:
+    number: "9381282875"

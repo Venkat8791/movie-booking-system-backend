@@ -24,4 +24,15 @@ public class UserService {
         return new PostUserResponseDTO(savedUser.getId(),savedUser.getUsername(),savedUser.getEmailId(),savedUser.getPhoneNumber());
 
     }
+
+
+    public User findOrCreateUser(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+                .orElseGet(() -> {
+                        User newUser = new User();
+                        newUser.setPhoneNumber(phoneNumber);
+                        return userRepository.save(newUser);
+                });
+    }
+
 }
