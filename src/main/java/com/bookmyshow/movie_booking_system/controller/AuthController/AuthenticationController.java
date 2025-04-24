@@ -1,8 +1,7 @@
 package com.bookmyshow.movie_booking_system.controller.AuthController;
 
 
-import com.bookmyshow.movie_booking_system.dto.AuthResonseDTO;
-import com.bookmyshow.movie_booking_system.dto.PostUserResponseDTO;
+import com.bookmyshow.movie_booking_system.dto.response.AuthResonseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.User;
 import com.bookmyshow.movie_booking_system.service.UserService;
 import com.bookmyshow.movie_booking_system.service.auth.JwtService;
@@ -41,11 +40,11 @@ public class AuthenticationController {
     public ResponseEntity<AuthResonseDTO> verifyOtp(@RequestParam("phoneNumber") String phoneNumber,
                                                     @RequestParam("otpCode") String otpCode) {
         boolean isVerified = twilioService.verifyOtp(phoneNumber,otpCode);
-        AuthResonseDTO authResonseDTO = new AuthResonseDTO(null,null,null,90);
+        AuthResonseDTO authResonseDTO = new AuthResonseDTO(null,null,null,90L);
         if(isVerified){
             User user = userService.findOrCreateUser(phoneNumber);
             String jwtToken = jwtService.generateToken(user);
-            authResonseDTO = new AuthResonseDTO(user.getId(),null,jwtToken,90);
+            authResonseDTO = new AuthResonseDTO(user.getId(),null,jwtToken,90L);
         }
 
         return ResponseEntity.status(200).body(authResonseDTO);

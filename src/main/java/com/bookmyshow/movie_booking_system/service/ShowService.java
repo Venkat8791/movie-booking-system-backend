@@ -1,13 +1,15 @@
 package com.bookmyshow.movie_booking_system.service;
 
-import com.bookmyshow.movie_booking_system.dto.GetShowDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowDTO;
 import com.bookmyshow.movie_booking_system.dto.GetShowTimeSeatLayoutDTO;
-import com.bookmyshow.movie_booking_system.dto.GetShowTimesDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowTimesDTO;
 import com.bookmyshow.movie_booking_system.dto.SeatDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.ShowSeat;
 import com.bookmyshow.movie_booking_system.entity.mysql.ShowTime;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;
 import com.bookmyshow.movie_booking_system.enums.SeatType;
+import com.bookmyshow.movie_booking_system.exception.dto.SeatsNotFoundException;
+import com.bookmyshow.movie_booking_system.exception.dto.ShowTimeNotFoundException;
 import com.bookmyshow.movie_booking_system.repository.ShowTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,12 @@ public class ShowService {
     public GetShowTimeSeatLayoutDTO getSeatsForShowTime(long id){
         Optional<ShowTime> showTimeOptional = showTimeRepository.findById(id);
         if(showTimeOptional.isEmpty()){
-            return null;
+            throw new ShowTimeNotFoundException("No such show time exists: " + id);
         }
         List<ShowSeat> seats = showTimeRepository.findSeatsByShowTime(id);
+        if(seats.isEmpty()){
+          throw new SeatsNotFoundException("Seats not added for this show time: " + id);
+        }
         ShowTime showTime = showTimeOptional.get();
         long showTimeId = showTime.getId();
         String screenName = showTime.getScreen().getScreenName();
@@ -52,7 +57,7 @@ public class ShowService {
     public GetShowTimeSeatLayoutDTO getBookedSeatsForShowTime(long id){
         Optional<ShowTime> showTimeOptional = showTimeRepository.findById(id);
         if(showTimeOptional.isEmpty()){
-            return null;
+            throw new ShowTimeNotFoundException("No such show time exists: " + id);
         }
         List<ShowSeat> seats = showTimeRepository.findBookedSeatsByShowTime(id,SeatStatus.BOOKED);
         ShowTime showTime = showTimeOptional.get();

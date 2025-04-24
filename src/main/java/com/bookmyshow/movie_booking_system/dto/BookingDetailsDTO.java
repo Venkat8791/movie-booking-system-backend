@@ -1,5 +1,6 @@
 package com.bookmyshow.movie_booking_system.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.util.List;

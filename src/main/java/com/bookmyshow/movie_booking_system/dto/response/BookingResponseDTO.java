@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.Date;
 
 @Getter
-public class PostBookingResponseDTO {
+public class BookingResponseDTO {
 
     private final long bookingId;
     private final long userId;
@@ -14,7 +14,7 @@ public class PostBookingResponseDTO {
     private final double totalPrice;
     private final Date bookingDate;
 
-    public PostBookingResponseDTO( long bookingId, long userId, long showTimeId, int numOfSeats, double totalPrice, Date bookingDate) {
+    public BookingResponseDTO(long bookingId, long userId, long showTimeId, int numOfSeats, double totalPrice, Date bookingDate) {
         this.bookingDate = bookingDate;
         this.bookingId = bookingId;
         this.numOfSeats = numOfSeats;

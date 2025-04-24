@@ -1,5 +1,6 @@
-package com.bookmyshow.movie_booking_system.dto;
+package com.bookmyshow.movie_booking_system.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
@@ -9,6 +10,7 @@ public class UserDTO {
 
     private final String password;
 
+    @NotNull
     private final String phoneNumber;
 
     private final String emailId;

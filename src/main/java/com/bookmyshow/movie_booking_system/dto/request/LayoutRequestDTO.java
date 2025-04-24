@@ -1,5 +1,6 @@
-package com.bookmyshow.movie_booking_system.dto;
+package com.bookmyshow.movie_booking_system.dto.request;
 
+import com.bookmyshow.movie_booking_system.dto.SeatSectionDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

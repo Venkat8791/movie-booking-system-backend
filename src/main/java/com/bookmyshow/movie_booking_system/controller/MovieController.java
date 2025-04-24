@@ -1,9 +1,9 @@
 package com.bookmyshow.movie_booking_system.controller;
 
-import com.bookmyshow.movie_booking_system.dto.GetMovieDTO;
-import com.bookmyshow.movie_booking_system.dto.GetMovieShowTimesDTO;
-import com.bookmyshow.movie_booking_system.dto.GetMoviesResponseDTO;
-import com.bookmyshow.movie_booking_system.dto.GetShowTimeDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetMovieDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetMovieShowTimesDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetMoviesResponseDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowTimeDTO;
 import com.bookmyshow.movie_booking_system.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,6 @@ public class MovieController {
 
     @GetMapping("/movies/{movieId}/showtimes")
     public ResponseEntity<GetMovieShowTimesDTO> getMovie(@PathVariable long movieId, @RequestParam(required = false) String showdate){
-        System.out.println(showdate);
         if(showdate == null || showdate.isEmpty()){
             showdate = LocalDate.now().toString();
         }

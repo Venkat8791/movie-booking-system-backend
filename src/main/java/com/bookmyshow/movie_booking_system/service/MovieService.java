@@ -1,9 +1,14 @@
 package com.bookmyshow.movie_booking_system.service;
 
-import com.bookmyshow.movie_booking_system.dto.*;
-import com.bookmyshow.movie_booking_system.dto.GetShowTimeDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowTimeDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetMovieDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetMoviesResponseDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.Movie;
 import com.bookmyshow.movie_booking_system.entity.mysql.ShowTime;
+import com.bookmyshow.movie_booking_system.exception.dto.MovieNotFoundException;
+import com.bookmyshow.movie_booking_system.exception.dto.NoMoviesException;
+import com.bookmyshow.movie_booking_system.exception.dto.ShowTimesNotFoundException;
 import com.bookmyshow.movie_booking_system.repository.MovieRepository;
 import com.bookmyshow.movie_booking_system.repository.ShowTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +30,15 @@ public class MovieService {
 
     public GetMoviesResponseDTO getMovies(){
         List<Movie> movies = movieRepository.findAll();
+        if(movies.isEmpty()){
+            throw new NoMoviesException("No movies are playing right now!!");
+        }
         return new GetMoviesResponseDTO(movies);
     }
 
     public GetMovieDTO getMovie(long movieId){
         Optional<Movie> movie = movieRepository.findById(movieId);
-        return movie.map(GetMovieDTO::new).orElse(null);
+        return movie.map(GetMovieDTO::new).orElseThrow(()-> new MovieNotFoundException("oops, The movie you are searching for is not found"));
 
     }
 
@@ -56,7 +64,13 @@ public class MovieService {
             GetShowDTO getShowDTO = new GetShowDTO(showTimeId,screenId,screenName,showTimeName,language,noOfSeats,availableSeats);
             cinemaShowMap.computeIfAbsent(cinemaID,k->new ArrayList<>()).add(getShowDTO);
         }
-        return cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), cinemaMap.get(entry.getKey()),entry
+        List<GetShowTimeDTO> showTimesDTOs =  cinemaShowMap.entrySet().stream().map(entry-> new GetShowTimeDTO(entry.getKey(), cinemaMap.get(entry.getKey()),entry
                 .getValue())).collect(Collectors.toList());
+
+        if(showTimesDTOs.isEmpty()){
+            throw new ShowTimesNotFoundException("There are no show times available for this movie");
+        }
+        return showTimesDTOs;
+
     }
 }

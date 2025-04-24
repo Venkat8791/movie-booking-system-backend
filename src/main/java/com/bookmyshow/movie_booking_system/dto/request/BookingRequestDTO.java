@@ -1,18 +1,26 @@
-package com.bookmyshow.movie_booking_system.dto;
+package com.bookmyshow.movie_booking_system.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class BookingDTO {
+public class BookingRequestDTO {
 
+    @NotNull
     private final long userId;
+
+    @NotNull
     private final long showTimeId;
+
+    @NotNull
     private final List<String> seatIds;
+
+    @NotNull
     private final double totalPrice;
 
-    public BookingDTO(List<String> seatIds, long showTimeId, double totalPrice, long userId) {
+    public BookingRequestDTO(List<String> seatIds, long showTimeId, double totalPrice, long userId) {
         this.seatIds = seatIds;
         this.showTimeId = showTimeId;
         this.totalPrice = totalPrice;

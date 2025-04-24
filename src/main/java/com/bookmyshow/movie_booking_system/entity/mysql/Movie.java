@@ -1,5 +1,6 @@
 package com.bookmyshow.movie_booking_system.entity.mysql;
 
+import com.bookmyshow.movie_booking_system.enums.LanguageType;
 import jakarta.persistence.*;
 import lombok.*;
 

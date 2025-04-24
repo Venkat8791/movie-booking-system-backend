@@ -1,4 +1,8 @@
 package com.bookmyshow.movie_booking_system.exception.dto;
 
-public class SeatsNotFoundException {
+public class SeatsNotFoundException extends RuntimeException{
+
+    public SeatsNotFoundException(String message){
+        super(message);
+    }
 }

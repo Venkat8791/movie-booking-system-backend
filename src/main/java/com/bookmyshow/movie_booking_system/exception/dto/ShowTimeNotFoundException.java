@@ -1,7 +1,7 @@
 package com.bookmyshow.movie_booking_system.exception.dto;
 
-public class ShowTimeNotFound extends RuntimeException{
-    public ShowTimeNotFound(String message){
+public class ShowTimeNotFoundException extends RuntimeException{
+    public ShowTimeNotFoundException(String message){
         super(message);
     }
 }

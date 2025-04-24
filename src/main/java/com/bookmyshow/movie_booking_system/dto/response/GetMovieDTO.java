@@ -1,6 +1,6 @@
-package com.bookmyshow.movie_booking_system.dto;
+package com.bookmyshow.movie_booking_system.dto.response;
 
-import com.bookmyshow.movie_booking_system.entity.mysql.LanguageType;
+import com.bookmyshow.movie_booking_system.enums.LanguageType;
 import com.bookmyshow.movie_booking_system.entity.mysql.Movie;
 import lombok.Getter;
 

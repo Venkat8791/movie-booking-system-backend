@@ -1,6 +1,8 @@
 package com.bookmyshow.movie_booking_system.service;
 
 import com.bookmyshow.movie_booking_system.dto.*;
+import com.bookmyshow.movie_booking_system.dto.request.BookingRequestDTO;
+import com.bookmyshow.movie_booking_system.dto.response.BookingResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.*;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;
 import com.bookmyshow.movie_booking_system.repository.*;
@@ -31,11 +33,7 @@ public class BookingService {
     @Autowired
     MovieRepository movieRepository;
 
-    public PostBookingResponseDTO addBooking(BookingDTO bookingDTO){
-        System.out.println(bookingDTO);
-        for(String seatId: bookingDTO.getSeatIds()){
-            System.out.println(seatId);
-        }
+    public BookingResponseDTO addBooking(BookingRequestDTO bookingDTO){
         Booking booking = new Booking();
         Optional<User> optionalUser = userRepository.findById(bookingDTO.getUserId());
         if(optionalUser.isEmpty()) {
@@ -69,7 +67,7 @@ public class BookingService {
         }
 
         Booking savedBooking = bookingRepository.save(booking);
-        return new PostBookingResponseDTO(savedBooking.getId(),user.getId(),showTime.getId(),bookingDTO.getSeatIds().size(),totalPrice,bookingDate);
+        return new BookingResponseDTO(savedBooking.getId(),user.getId(),showTime.getId(),bookingDTO.getSeatIds().size(),totalPrice,bookingDate);
     }
 
     public BookingDetailsDTO getBooking(long bookingId){

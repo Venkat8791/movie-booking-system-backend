@@ -1,7 +1,7 @@
 package com.bookmyshow.movie_booking_system.controller;
 
 import com.bookmyshow.movie_booking_system.dto.GetShowTimeSeatLayoutDTO;
-import com.bookmyshow.movie_booking_system.dto.GetShowTimesDTO;
+import com.bookmyshow.movie_booking_system.dto.response.GetShowTimesDTO;
 import com.bookmyshow.movie_booking_system.service.ShowService;
 
 import org.slf4j.Logger;

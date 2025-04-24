@@ -1,4 +1,4 @@
-package com.bookmyshow.movie_booking_system.entity.mysql;
+package com.bookmyshow.movie_booking_system.enums;
 
 public enum LanguageType {
     ENGLISH("English"),

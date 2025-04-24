@@ -3,27 +3,26 @@ package com.bookmyshow.movie_booking_system.service.auth;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TwilioService {
 
-    @Value("${twilio.account.sid}")
+    private final Dotenv dotenv = Dotenv.load();
+
     private String accountSid;
 
-    @Value("${twilio.auth.token}")
     private String authToken;
 
-    @Value("${twilio.verify.serviceSid}")
     private String serviceSid;
-
-
 
     @PostConstruct
     public void initTwilio() {
-        System.out.println(authToken);
+        accountSid = dotenv.get("TWILIO_ACCOUNT_SID");
+        authToken = dotenv.get("TWILIO_AUTH_TOKEN");
+        serviceSid = dotenv.get("TWILIO_SERVICE_SID");
         System.out.println(accountSid);
         Twilio.init(accountSid, authToken);
     }

@@ -1,4 +1,8 @@
 package com.bookmyshow.movie_booking_system.exception.dto;
 
-public class LayoutDocumentNotFoundException {
+public class LayoutDocumentNotFoundException extends RuntimeException{
+
+    public LayoutDocumentNotFoundException(String message){
+        super(message);
+    }
 }
