@@ -14,11 +14,11 @@ public class JwtTestController {
     JwtService jwtService;
 
     @GetMapping("/generate")
-    public String generateToken(@RequestParam("phoneNumber") String phoneNumber){
+    public String generateToken(@RequestParam("phoneNumber") String phoneNumber) {
         User user = new User();
         user.setId(1L);
         user.setPhoneNumber(phoneNumber);
-        return jwtService.generateToken(user);
+        return jwtService.generateToken("user");
     }
 
     @GetMapping("/validate")

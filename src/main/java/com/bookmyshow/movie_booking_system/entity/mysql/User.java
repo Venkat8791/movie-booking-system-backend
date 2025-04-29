@@ -12,27 +12,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
 
     private String phoneNumber;
 
-    private String emailId;
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     public void addBooking(Booking booking) {
         bookings.add(booking);
-        booking.setUser(this);  // important to maintain both sides
+        booking.setUser(this);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", emailId='" + emailId + '\'' +
                 '}';
     }
 }

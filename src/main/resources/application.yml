@@ -37,3 +37,9 @@ twilio:
     token: #add auth token
   phone:
     number: "9381282875"
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        web: DEBUG

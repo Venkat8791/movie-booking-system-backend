@@ -1,7 +1,6 @@
 package com.bookmyshow.movie_booking_system.service.auth;
 
 
-import com.bookmyshow.movie_booking_system.entity.mysql.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -30,12 +29,12 @@ public class JwtService {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String extractPhoneNumber(String token) {
+    public String extractEmail(String token) {
         return extractClaims(token).getSubject();
     }
 
-    public String generateToken(User user) {
-        return Jwts.builder().setSubject(user.getId().toString()).claim("phoneNumber", user.getPhoneNumber())
+    public String generateToken(String email) {
+        return Jwts.builder().setSubject(email)
                 .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(key).compact();
     }
@@ -50,5 +49,9 @@ public class JwtService {
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
+    public boolean validateToken(String token) {
+        return extractClaims(token) != null;
     }
 }
