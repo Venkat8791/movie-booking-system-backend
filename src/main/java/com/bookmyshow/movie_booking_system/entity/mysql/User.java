@@ -14,13 +14,11 @@ public class User {
 
     private String username;
 
-    private String password;
-
     private String phoneNumber;
 
     private String emailId;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     public void addBooking(Booking booking) {
@@ -33,7 +31,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", emailId='" + emailId + '\'' +
                 '}';

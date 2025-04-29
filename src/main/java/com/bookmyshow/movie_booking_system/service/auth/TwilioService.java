@@ -27,18 +27,21 @@ public class TwilioService {
         Twilio.init(accountSid, authToken);
     }
 
-    public String sendOtp(String phoneNumber){
+    public String sendOtp(String phoneNumber) {
+        System.out.println(serviceSid);
+        System.out.println(accountSid);
+        System.out.println(authToken);
         try {
             Verification verification = Verification.creator(
-                            serviceSid, "+91"+phoneNumber, "sms")  // Type: 'sms' for OTP sent via SMS
+                            serviceSid, "+91" + phoneNumber, "sms")  // Type: 'sms' for OTP sent via SMS
                     .create();
-           return "OTP sent successfully!";
+            return "OTP sent successfully!";
         } catch (Exception e) {
-            return "Error sending otp: " +  e.getMessage();
+            return "Error sending otp: " + e.getMessage();
         }
     }
 
-    public boolean verifyOtp(String phoneNumber,String otpCode){
+    public boolean verifyOtp(String phoneNumber, String otpCode) {
         try {
             // Verify OTP code
             VerificationCheck verificationCheck = VerificationCheck.creator(serviceSid)
@@ -54,7 +57,7 @@ public class TwilioService {
                 return false;
             }
         } catch (Exception e) {
-            throw new Error( "Error verifying OTP: " + e.getMessage());
+            throw new Error("Error verifying OTP: " + e.getMessage());
         }
     }
 
