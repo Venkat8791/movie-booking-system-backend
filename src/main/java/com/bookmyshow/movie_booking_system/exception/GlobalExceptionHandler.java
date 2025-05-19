@@ -52,6 +52,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+
     @ExceptionHandler(InvalidOtpException.class)
     public ResponseEntity<ErrorResponse> handleInvalidOtp(InvalidOtpException ex) {
         ErrorResponse error = new ErrorResponse("INVALID_OTP", ex.getMessage());

@@ -2,6 +2,7 @@ package com.bookmyshow.movie_booking_system.service;
 
 import com.bookmyshow.movie_booking_system.dto.request.LoginDTO;
 import com.bookmyshow.movie_booking_system.dto.request.PostUserDTO;
+import com.bookmyshow.movie_booking_system.dto.request.PutUserRequestDTO;
 import com.bookmyshow.movie_booking_system.dto.response.PostUserResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.User;
 import com.bookmyshow.movie_booking_system.exception.dto.InvalidCredentialsException;
@@ -73,6 +74,18 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public User updateUser(PutUserRequestDTO userData) {
+        Optional<User> userOptional = userRepository.findByEmail(userData.getEmail());
+        if (userOptional.isEmpty()) {
+            return null;
+        }
+        User user = userOptional.get();
+        user.setFirstName(userData.getFirstName());
+        user.setLastName(userData.getLastName());
+        user.setPhoneNumber(userData.getPhoneNumber());
+        return userRepository.save(user);
     }
 
 //    public UserDTO getUserDetails(Long userId) {

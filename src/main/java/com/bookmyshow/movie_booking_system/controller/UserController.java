@@ -3,23 +3,30 @@ package com.bookmyshow.movie_booking_system.controller;
 
 import com.bookmyshow.movie_booking_system.dto.request.LoginDTO;
 import com.bookmyshow.movie_booking_system.dto.request.PostUserDTO;
+import com.bookmyshow.movie_booking_system.dto.request.PutUserRequestDTO;
 import com.bookmyshow.movie_booking_system.dto.response.AuthResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.response.PostUserResponseDTO;
+import com.bookmyshow.movie_booking_system.dto.response.PutUserResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.User;
+import com.bookmyshow.movie_booking_system.exception.dto.InvalidCredentialsException;
 import com.bookmyshow.movie_booking_system.service.UserService;
 import com.bookmyshow.movie_booking_system.service.auth.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/mxmovies/v1")
+@Slf4j
 public class UserController {
+
 
     @Autowired
     UserService userService;
@@ -36,7 +43,7 @@ public class UserController {
     @PostMapping("/api/login")
     public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody @Valid LoginDTO loginDTO, HttpServletResponse response) {
         User user = userService.authenticateUser(loginDTO);
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName());
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber());
         String authToken = jwtService.generateToken(loginDTO.getEmail());
         Cookie cookie = new Cookie("authToken", authToken);
         cookie.setHttpOnly(true);
@@ -49,15 +56,31 @@ public class UserController {
 
     @GetMapping("/api/current-user")
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+        log.info("fetching current user");
         String token = userService.extractJwtFromCookie(request);
         if (token != null && jwtService.validateToken(token)) {
             String email = jwtService.extractEmail(token);
             User user = userService.findUserByEmail(email);
             if (user == null) {
-                return ResponseEntity.status(404).body("User not found");
+                throw new InvalidCredentialsException("User Not Found");
             }
-            AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName());
+            AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber());
             return ResponseEntity.status(200).body(authResponseDTO);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+    }
+
+    @PutMapping("/api/update-user")
+    public ResponseEntity<?> updateCurrentUser(HttpServletRequest request, @RequestBody PutUserRequestDTO user) {
+        log.info("Updating current info");
+        String token = userService.extractJwtFromCookie(request);
+        if (token != null && jwtService.validateToken(token)) {
+            User updatedUser = userService.updateUser(user);
+            if (updatedUser == null) {
+                throw new InvalidCredentialsException("User Not Found");
+            }
+            PutUserResponseDTO responseDTO = new PutUserResponseDTO("User Updated Successfully", updatedUser.getPhoneNumber(), updatedUser.getFirstName(), updatedUser.getLastName());
+            return ResponseEntity.status(200).body(responseDTO);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
     }
