@@ -8,6 +8,7 @@ import com.bookmyshow.movie_booking_system.dto.response.BookingResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.*;
 import com.bookmyshow.movie_booking_system.enums.SeatStatus;
 import com.bookmyshow.movie_booking_system.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class BookingService {
 
@@ -38,18 +40,21 @@ public class BookingService {
         Booking booking = new Booking();
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not Found");
+            log.error("User not found");
+            throw new RuntimeException("User not found");
         }
         User user = optionalUser.get();
         user.addBooking(booking);
 
         Optional<ShowTime> showTimeOptional = showTimeRepository.findById(bookingDTO.getShowTimeId());
         if (showTimeOptional.isEmpty()) {
+            log.error("Show Time not found");
             throw new RuntimeException("Show Time not found");
         }
         ShowTime showTime = showTimeOptional.get();
         showTime.addBooking(booking);
 
+        log.info("booking in progress for user:{}", email);
         int availableSeats = showTime.getAvailableSeats() - bookingDTO.getSeatIds().size();
         showTime.setAvailableSeats(availableSeats);
 
@@ -89,7 +94,5 @@ public class BookingService {
             seatNumbers.add(seat.getSeatNumber());
         }
         return new BookingDetailsDTO(bookingId, showTime.getLanguage().getLanguageName(), movieDTO, showDetailsDTO, seatNumbers, booking.getTotalPrice());
-
-
     }
 }

@@ -4,10 +4,12 @@ import com.bookmyshow.movie_booking_system.dto.request.LayoutRequestDTO;
 import com.bookmyshow.movie_booking_system.entity.mongodb.LayoutDocument;
 import com.bookmyshow.movie_booking_system.service.mongo.LayoutService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/mxmovies/v1")
 public class SeatLayoutController {
@@ -16,13 +18,15 @@ public class SeatLayoutController {
     LayoutService layoutService;
 
     @GetMapping("/layouts/{screenId}")
-    public ResponseEntity<LayoutDocument> getLayoutByScreenId(@PathVariable long screenId){
+    public ResponseEntity<LayoutDocument> getLayoutByScreenId(@PathVariable long screenId) {
+        log.info("*** FETCHING SCREENING LAYOUT FOR SCREEN:{} ****", screenId);
         LayoutDocument layoutDocument = layoutService.fetchLayoutByScreenId(screenId);
+        log.info("*** FETCHED SCREENING LAYOUT FOR SCREEN:{} ****", screenId);
         return ResponseEntity.status(200).body(layoutDocument);
     }
 
     @PostMapping("/layouts/{screenId}")
-    public ResponseEntity<LayoutDocument> insertSeatLayoutIntoScreenId(@RequestBody @Valid LayoutRequestDTO layoutRequestDTO){
+    public ResponseEntity<LayoutDocument> insertSeatLayoutIntoScreenId(@RequestBody @Valid LayoutRequestDTO layoutRequestDTO) {
         LayoutDocument layoutDocument = layoutService.insertSeatLayoutToScreenId(layoutRequestDTO);
         return ResponseEntity.status(200).body(layoutDocument);
     }

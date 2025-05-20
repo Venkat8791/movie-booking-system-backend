@@ -6,6 +6,8 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//NOT USING RIGHT NOW
+
 @RestController
 @RequestMapping("/api/test-jwt")
 public class JwtTestController {

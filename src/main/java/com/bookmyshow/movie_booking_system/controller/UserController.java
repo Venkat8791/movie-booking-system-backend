@@ -35,12 +35,15 @@ public class UserController {
 
     @PostMapping("/api/signup")
     public ResponseEntity<PostUserResponseDTO> addUser(@RequestBody @Valid PostUserDTO userDTO) {
+        log.info("**** REGISTERING NEW USER ****");
         PostUserResponseDTO postUserDTOResponse = userService.addUser(userDTO);
+        log.info("**** REGISTERED NEW USER ****");
         return ResponseEntity.status(200).body(postUserDTOResponse);
     }
 
     @PostMapping("/api/login")
     public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody @Valid LoginDTO loginDTO, HttpServletResponse response) {
+        log.info("**** LOGGING IN CURRENT USER ****");
         User user = userService.authenticateUser(loginDTO);
         AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber());
         String authToken = jwtService.generateToken(loginDTO.getEmail());
@@ -50,42 +53,48 @@ public class UserController {
         cookie.setPath("/");
         cookie.setMaxAge(10 * 60 * 60);
         response.addCookie(cookie);
+        log.info("**** LOGGED IN CURRENT USER ****");
         return ResponseEntity.status(200).body(authResponseDTO);
     }
 
     @GetMapping("/api/current-user")
     public ResponseEntity<AuthResponseDTO> getCurrentUser(HttpServletRequest request) {
-        log.info("fetching current user");
+        log.info("**** FETCHING CURRENT USER ****");
         String token = jwtService.extractJwtFromCookie(request);
         if (token == null || !jwtService.validateToken(token)) {
             throw new UnAuthorizedException("You are unauthorized. Please login to continue");
         }
         String email = jwtService.extractEmail(token);
         AuthResponseDTO authResponseDTO = userService.fetchCurrentUserByEmail(email);
+        log.info("**** FETCHED CURRENT USER ****");
         return ResponseEntity.status(200).body(authResponseDTO);
     }
 
     @PutMapping("/api/update-user")
     public ResponseEntity<PutUserResponseDTO> updateCurrentUser(HttpServletRequest request, @RequestBody PutUserRequestDTO user) {
-        log.info("Updating current info");
+        log.info("**** UPDATING CURRENT USER ****");
         String token = jwtService.extractJwtFromCookie(request);
         if (token == null || !jwtService.validateToken(token)) {
             throw new UnAuthorizedException("You are unauthorized. Please login to continue");
         }
         PutUserResponseDTO responseDTO = userService.updateUser(user);
+        log.info("**** UPDATED CURRENT USER ****");
         return ResponseEntity.status(200).body(responseDTO);
 
     }
 
     @PostMapping("/api/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
+        log.info("**** LOGGING OUT CURRENT USER ****");
+
         Cookie cookie = new Cookie("authToken", null);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
-
         response.addCookie(cookie);
+
+        log.info("**** LOGGED OUT CURRENT USER ****");
         return ResponseEntity.ok().build();
     }
 
