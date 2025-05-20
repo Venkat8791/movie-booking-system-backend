@@ -8,7 +8,7 @@ import com.bookmyshow.movie_booking_system.dto.response.AuthResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.response.PostUserResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.response.PutUserResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.User;
-import com.bookmyshow.movie_booking_system.exception.dto.InvalidCredentialsException;
+import com.bookmyshow.movie_booking_system.exception.dto.UnAuthorizedException;
 import com.bookmyshow.movie_booking_system.service.UserService;
 import com.bookmyshow.movie_booking_system.service.auth.JwtService;
 import jakarta.servlet.http.Cookie;
@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,34 +54,27 @@ public class UserController {
     }
 
     @GetMapping("/api/current-user")
-    public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+    public ResponseEntity<AuthResponseDTO> getCurrentUser(HttpServletRequest request) {
         log.info("fetching current user");
-        String token = userService.extractJwtFromCookie(request);
-        if (token != null && jwtService.validateToken(token)) {
-            String email = jwtService.extractEmail(token);
-            User user = userService.findUserByEmail(email);
-            if (user == null) {
-                throw new InvalidCredentialsException("User Not Found");
-            }
-            AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber());
-            return ResponseEntity.status(200).body(authResponseDTO);
+        String token = jwtService.extractJwtFromCookie(request);
+        if (token == null || !jwtService.validateToken(token)) {
+            throw new UnAuthorizedException("You are unauthorized. Please login to continue");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        String email = jwtService.extractEmail(token);
+        AuthResponseDTO authResponseDTO = userService.fetchCurrentUserByEmail(email);
+        return ResponseEntity.status(200).body(authResponseDTO);
     }
 
     @PutMapping("/api/update-user")
-    public ResponseEntity<?> updateCurrentUser(HttpServletRequest request, @RequestBody PutUserRequestDTO user) {
+    public ResponseEntity<PutUserResponseDTO> updateCurrentUser(HttpServletRequest request, @RequestBody PutUserRequestDTO user) {
         log.info("Updating current info");
-        String token = userService.extractJwtFromCookie(request);
-        if (token != null && jwtService.validateToken(token)) {
-            User updatedUser = userService.updateUser(user);
-            if (updatedUser == null) {
-                throw new InvalidCredentialsException("User Not Found");
-            }
-            PutUserResponseDTO responseDTO = new PutUserResponseDTO("User Updated Successfully", updatedUser.getPhoneNumber(), updatedUser.getFirstName(), updatedUser.getLastName());
-            return ResponseEntity.status(200).body(responseDTO);
+        String token = jwtService.extractJwtFromCookie(request);
+        if (token == null || !jwtService.validateToken(token)) {
+            throw new UnAuthorizedException("You are unauthorized. Please login to continue");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        PutUserResponseDTO responseDTO = userService.updateUser(user);
+        return ResponseEntity.status(200).body(responseDTO);
+
     }
 
     @PostMapping("/api/logout")
@@ -97,16 +89,4 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("/users/{userId}")
-//    public ResponseEntity<UserDTO> getUserDetails(@PathVariable Long userId) {
-//        UserDTO user = userService.getUserDetails(userId);
-//        return ResponseEntity.status(200).body(user);
-//    }
-//
-//    @PutMapping("/users/update-profile")
-//    public ResponseEntity<UserDTO> updateUser(@RequestBody PutUserDTO user) {
-//        System.out.println(user);
-//        UserDTO userDTO = userService.updateUser(user);
-//        return ResponseEntity.status(200).body(userDTO);
-//    }
 }

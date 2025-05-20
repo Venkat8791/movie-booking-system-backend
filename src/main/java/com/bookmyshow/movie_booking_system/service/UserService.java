@@ -3,19 +3,21 @@ package com.bookmyshow.movie_booking_system.service;
 import com.bookmyshow.movie_booking_system.dto.request.LoginDTO;
 import com.bookmyshow.movie_booking_system.dto.request.PostUserDTO;
 import com.bookmyshow.movie_booking_system.dto.request.PutUserRequestDTO;
+import com.bookmyshow.movie_booking_system.dto.response.AuthResponseDTO;
 import com.bookmyshow.movie_booking_system.dto.response.PostUserResponseDTO;
+import com.bookmyshow.movie_booking_system.dto.response.PutUserResponseDTO;
 import com.bookmyshow.movie_booking_system.entity.mysql.User;
 import com.bookmyshow.movie_booking_system.exception.dto.InvalidCredentialsException;
 import com.bookmyshow.movie_booking_system.exception.dto.UserAlreadyExistsException;
 import com.bookmyshow.movie_booking_system.repository.UserRepository;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -59,53 +61,27 @@ public class UserService {
         return existingUser;
     }
 
-    public User findUserByEmail(String email) {
+    public AuthResponseDTO fetchCurrentUserByEmail(String email) {
         Optional<User> exisitingUserOptional = userRepository.findByEmail(email);
-        return exisitingUserOptional.orElse(null);
-    }
-
-    public String extractJwtFromCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("authToken".equals(cookie.getName())) {
-                    return cookie.getValue();
-                }
-            }
+        if (exisitingUserOptional.isEmpty()) {
+            log.info("User with email: {} not found", email);
+            throw new InvalidCredentialsException("User Not Found");
         }
-        return null;
+        User user = exisitingUserOptional.get();
+        return new AuthResponseDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber());
     }
 
-    public User updateUser(PutUserRequestDTO userData) {
+
+    public PutUserResponseDTO updateUser(PutUserRequestDTO userData) {
         Optional<User> userOptional = userRepository.findByEmail(userData.getEmail());
         if (userOptional.isEmpty()) {
-            return null;
+            throw new InvalidCredentialsException("User Not Found");
         }
         User user = userOptional.get();
         user.setFirstName(userData.getFirstName());
         user.setLastName(userData.getLastName());
         user.setPhoneNumber(userData.getPhoneNumber());
-        return userRepository.save(user);
+        User updatedUser = userRepository.save(user);
+        return new PutUserResponseDTO("User Updated Successfully", updatedUser.getPhoneNumber(), updatedUser.getFirstName(), updatedUser.getLastName());
     }
-
-//    public UserDTO getUserDetails(Long userId) {
-//        Optional<User> userOptional = userRepository.findById(userId);
-//        if (userOptional.isEmpty()) {
-//            throw new UserNotFoundException("User Doesn't Exist");
-//        }
-//        User user = userOptional.get();
-//        return new UserDTO(user.getUsername(), user.getEmailId(), user.getPhoneNumber());
-//    }
-//
-//    public UserDTO updateUser(PutUserDTO putUserDTO) {
-//        Optional<User> userOptional = userRepository.findById(putUserDTO.getUserId());
-//        if (userOptional.isEmpty()) {
-//            throw new UserNotFoundException("User Doesn't Exist");
-//        }
-//        User user = userOptional.get();
-//        user.setUsername(putUserDTO.getUsername());
-//        user.setEmailId(putUserDTO.getEmailId());
-//        User savedUser = userRepository.save(user);
-//        return new UserDTO(savedUser.getUsername(), savedUser.getEmailId(), savedUser.getPhoneNumber());
-//    }
 }

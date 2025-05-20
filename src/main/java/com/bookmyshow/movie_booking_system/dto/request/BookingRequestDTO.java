@@ -9,9 +9,6 @@ import java.util.List;
 public class BookingRequestDTO {
 
     @NotNull
-    private final long userId;
-
-    @NotNull
     private final long showTimeId;
 
     @NotNull
@@ -20,18 +17,16 @@ public class BookingRequestDTO {
     @NotNull
     private final double totalPrice;
 
-    public BookingRequestDTO(List<String> seatIds, long showTimeId, double totalPrice, long userId) {
+    public BookingRequestDTO(List<String> seatIds, long showTimeId, double totalPrice) {
         this.seatIds = seatIds;
         this.showTimeId = showTimeId;
         this.totalPrice = totalPrice;
-        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "BookingDTO{" +
                 "seatIds=" + seatIds +
-                ", userId=" + userId +
                 ", showTimeId=" + showTimeId +
                 ", totalPrice=" + totalPrice +
                 '}';
