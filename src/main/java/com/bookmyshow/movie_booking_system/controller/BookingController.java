@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/mxmovies/v1")
@@ -45,5 +47,21 @@ public class BookingController {
         BookingDetailsDTO bookingDetailsDTO = bookingService.getBooking(bookingId);
         log.info("**** EXITING GET BOOKING ****");
         return ResponseEntity.status(200).body(bookingDetailsDTO);
+    }
+
+    @GetMapping("/bookings/my")
+    public ResponseEntity<List<BookingDetailsDTO>> getAllMyBookings(HttpServletRequest request) {
+        log.info("**** FETCHING ALL BOOKINGS OF CURRENT USER ****");
+        String token = jwtService.extractJwtFromCookie(request);
+        System.out.println(token);
+        if (token == null || !jwtService.validateToken(token)) {
+            log.error("Unauthorized user");
+            throw new UnAuthorizedException("You are unauthorized. Please login to continue");
+        }
+        String email = jwtService.extractEmail(token);
+        List<BookingDetailsDTO> bookings = bookingService.getAllBookings(email);
+        log.info("**** FETCHED ALL BOOKINGS OF CURRENT USER ****");
+        return ResponseEntity.status(200).body(bookings);
+
     }
 }

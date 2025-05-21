@@ -81,6 +81,25 @@ public class BookingService {
         if (booking == null) {
             throw new RuntimeException("booking not found");
         }
+        return getBookingDetailsDTO(booking);
+    }
+
+    public List<BookingDetailsDTO> getAllBookings(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            log.error("User not found");
+            throw new RuntimeException("User not found");
+        }
+        User user = optionalUser.get();
+        List<BookingDetailsDTO> bookings = new ArrayList<>();
+        for (Booking booking : user.getBookings()) {
+            BookingDetailsDTO bookingDetailsDTO = getBookingDetailsDTO(booking);
+            bookings.add(bookingDetailsDTO);
+        }
+        return bookings;
+    }
+
+    private static BookingDetailsDTO getBookingDetailsDTO(Booking booking) {
         ShowTime showTime = booking.getShowTime();
         Screen screen = showTime.getScreen();
         Cinema cinema = screen.getCinema();
@@ -93,6 +112,6 @@ public class BookingService {
             Seat seat = showSeat.getSeat();
             seatNumbers.add(seat.getSeatNumber());
         }
-        return new BookingDetailsDTO(bookingId, showTime.getLanguage().getLanguageName(), movieDTO, showDetailsDTO, seatNumbers, booking.getTotalPrice());
+        return new BookingDetailsDTO(booking.getId(), showTime.getLanguage().getLanguageName(), movieDTO, showDetailsDTO, seatNumbers, booking.getTotalPrice());
     }
 }
